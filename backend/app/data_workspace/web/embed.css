@@ -1,0 +1,25 @@
+.data-workspace-link{position:fixed;right:18px;bottom:16px;z-index:100;background:#fff;color:#006b6c!important;border:1px solid #b6d7d3;border-radius:10px;padding:10px 15px;font:600 12px "Segoe UI",system-ui,sans-serif;text-decoration:none;box-shadow:0 3px 18px #144c5020}
+html[data-workspace-embedded=true]{--bg:#f3f8f8;--text:#173b40;--primary:#008b8b;--primary-strong:#006b6c;--muted:#647d81;--border:#dde9e9;--surface:#fff;--surface-2:#f7fbfa;--shadow:none;font-family:"Segoe UI",system-ui,sans-serif}
+html[data-workspace-embedded=true] body{background:#f3f8f8;color:#173b40;font-family:"Segoe UI",system-ui,sans-serif}
+html[data-workspace-embedded=true] :is(.sidebar,body>header,body>main>header,.main>.topbar,footer,.page-title,.intro,.review-tabs,main>a[href^="/imports"],main>.eyebrow){display:none!important}
+html[data-workspace-embedded=true] :is(main,.main){margin-left:0;width:100%;max-width:none}
+html[data-workspace-embedded=true] :is(.content,main>.page,main.page){padding:24px 30px;max-width:1500px;margin:0 auto}
+html[data-workspace-embedded=true] .app-shell{display:block;min-height:100vh}
+html[data-workspace-module=import] main{padding:24px 30px;max-width:1500px;margin:0 auto}
+html[data-workspace-module=import] main>.tabs{display:none}
+html[data-workspace-embedded=true] .brand{display:none}
+html[data-workspace-embedded=true] :is(.card,.graph-card,.detail-card,.query-card,.stats,.panel-card){border-color:#dde9e9;border-radius:13px;box-shadow:none}
+html[data-workspace-embedded=true] :is(button,input,textarea,select){font-family:inherit}
+html[data-workspace-embedded=true] :is(.btn.primary,.search-btn,button.primary){background:#008b8b;color:#fff;border-color:#008b8b}
+html[data-workspace-embedded=true] :is(.btn.primary,.search-btn,button.primary):hover{background:#006b6c;border-color:#006b6c}
+html[data-workspace-embedded=true] :is(.tab.active,.normalized){background:#eaf6f3;border-color:#cce5df;color:#006b6c}
+html[data-workspace-embedded=true] .normalized .k{color:#428b88}
+html[data-workspace-embedded=true] :is(input,textarea,select):focus{border-color:#008b8b;box-shadow:0 0 0 3px #008b8b14}
+html[data-workspace-embedded=true] .stats{margin-bottom:22px}
+html[data-workspace-embedded=true] .graph-area{min-height:440px}
+html[data-workspace-module=context] .grid{grid-template-columns:minmax(300px,.85fr) minmax(420px,1.4fr)}
+html[data-context-view=history] :is(#contextTurnCard,#contextResultCard,#contextResolveCard .actions,#contextResolveCard .hint,#contextResolveCard .card-head span,#contextResolveCard .field:not(.context-identity),[data-tab=jsonPanel]){display:none}
+html[data-context-view=history] .grid{grid-template-columns:1fr}
+html[data-context-view=history] #contextResolveCard .fields{max-width:750px}
+@media(max-width:1000px){html[data-workspace-module=context] .grid{grid-template-columns:1fr}}
+@media(max-width:600px){html[data-workspace-embedded=true] :is(.content,main>.page,main.page),html[data-workspace-module=import] main{padding:17px 14px}html[data-workspace-embedded=true] .graph-area{min-height:370px}}

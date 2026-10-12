@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#008b8b"><title>Quản lý dữ liệu · Medical AI</title>
+  <link rel="icon" href="/data-assets/logo.png"><link rel="stylesheet" href="/data-assets/style.css">
+  <script src="/data-assets/app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#workspace">Đến nội dung chính</a>
+<div class="shell" id="shell">
+  <aside class="navigation" id="navigation">
+    <a class="brand" href="#overview" aria-label="Medical AI · Tổng quan"><img src="/data-assets/logo.png" alt="" width="42" height="42"><span>Medical AI<small>QUẢN LÝ DỮ LIỆU</small></span></a>
+    <p class="nav-label">KHÔNG GIAN DỮ LIỆU</p>
+    <nav id="primaryNav" aria-label="Quản lý dữ liệu">
+      <a href="#overview" data-group="overview" title="Tổng quan"><i aria-hidden="true">◫</i><span>Tổng quan<small>Kết nối & hoạt động</small></span></a>
+      <a href="#rag/import" data-group="rag" title="RAG"><i aria-hidden="true">▤</i><span>RAG<small>Kho tài liệu & truy hồi</small></span></a>
+      <a href="#kg/import" data-group="kg" title="Knowledge Graph"><i aria-hidden="true">◇</i><span>Knowledge Graph<small>Thực thể & bằng chứng</small></span></a>
+      <a href="#context/import" data-group="context" title="Context & Patient"><i aria-hidden="true">◎</i><span>Context & Patient<small>Lịch sử & dữ kiện bệnh nhân</small></span></a>
+      <a href="#reports" data-group="reports" title="Lịch sử & báo cáo"><i aria-hidden="true">↻</i><span>Lịch sử & báo cáo<small>Theo dõi các lượt nạp</small></span></a>
+    </nav>
+    <div class="sidebar-bottom"><div class="side-note"><span class="dot"></span><strong>Cùng một nơi,<br>đủ ngữ cảnh.</strong><p>Từ tài liệu nguồn đến tri thức phục vụ hội thoại.</p></div><a id="backToChat" href="/" class="back-link"><span aria-hidden="true">←</span><span>Trang dịch vụ</span></a></div>
+  </aside>
+  <button id="navBackdrop" class="nav-backdrop" hidden type="button" aria-label="Đóng điều hướng"></button>
+  <main id="workspace" tabindex="-1">
+    <header class="topbar"><button id="toggleNav" type="button" class="icon-button" aria-label="Ẩn hoặc hiện điều hướng" aria-controls="navigation" aria-expanded="true">☰</button><div class="page-heading"><span>MEDICAL AI / DỮ LIỆU</span><h1 id="pageTitle">Tổng quan dữ liệu</h1></div><button id="refresh" type="button" class="quiet-button">↻ <span>Làm mới</span></button></header>
+    <nav id="subnav" class="subnav" hidden aria-label="Chức năng dữ liệu"></nav>
+    <div id="feedback" class="feedback" role="alert" hidden></div>
+    <section id="overview" class="native-page">
+      <div class="hero"><div><span class="eyebrow">KHO TRI THỨC Y KHOA</span><h2>Dữ liệu rõ nguồn.<br><em>Thao tác trong một nơi.</em></h2><p>Nạp, kiểm tra và tra cứu dữ liệu cho các thành phần của Medical AI.</p></div><div class="hero-art" aria-hidden="true"><span>RAG <b>▤</b></span><span>KG <b>◇</b></span><span>CONTEXT <b>◎</b></span></div></div>
+      <div class="section-heading"><h2>Các nguồn dữ liệu</h2><span id="checkedAt">Đang kiểm tra kết nối…</span></div>
+      <div id="moduleCards" class="module-cards" aria-live="polite"><div class="empty">Đang đọc thông tin các nguồn dữ liệu…</div></div>
+      <div class="section-heading recent-heading"><h2>Hoạt động gần đây</h2><a href="#reports">Xem tất cả →</a></div>
+      <div id="recentJobs" class="panel"><div class="empty">Đang tải lịch sử…</div></div>
+    </section>
+    <section id="reports" class="native-page" hidden>
+      <div class="section-heading"><div><span class="eyebrow">THEO DÕI TIẾN TRÌNH</span><h2>Lịch sử nạp dữ liệu</h2><p class="muted">Mở một lượt để xem từng file, xử lý lỗi và tiếp tục thao tác.</p></div><span id="activeCount" class="badge">Đang tải…</span></div>
+      <div id="reportWarnings" class="notice" role="status" hidden></div>
+      <div class="filters panel"><label>Nguồn dữ liệu<select id="moduleFilter"><option value="all">Tất cả nguồn</option><option value="rag">RAG</option><option value="kg">Knowledge Graph</option><option value="context">Context & Patient</option></select></label><label>Trạng thái<select id="statusFilter"><option value="all">Tất cả trạng thái</option><option value="active">Đang xử lý</option><option value="attention">Cần kiểm tra</option><option value="done">Đã kết thúc</option></select></label><label class="search-filter">Tìm lượt nạp<input id="jobSearch" type="search" maxlength="128" placeholder="Nhập mã lượt nạp…"></label></div>
+      <div id="jobsTable" class="panel"><div class="empty">Đang tải lịch sử…</div></div>
+      <div class="pager"><span id="reportCount"></span><div><button id="previousPage" type="button" class="quiet-button">← Trước</button><span id="pageNumber"></span><button id="nextPage" type="button" class="quiet-button">Tiếp →</button></div></div>
+      <p class="caption">Hiển thị tối đa 30 lượt gần nhất của mỗi nguồn. Lượt đang chạy tự cập nhật sau mỗi 5 giây.</p>
+    </section>
+    <section id="modulePanel" class="module-panel" hidden aria-label="Không gian thao tác dữ liệu"><div id="frameStatus" class="frame-status" role="status"><p id="frameMessage">Đang mở giao diện…</p><button id="retryFrame" type="button" class="quiet-button" hidden>Thử mở lại</button></div><div id="frames" class="frames"></div></section>
+    <noscript><p class="feedback">Bật JavaScript để sử dụng không gian quản lý dữ liệu.</p></noscript>
+  </main>
+</div>
+</body></html>

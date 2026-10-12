@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "document": {
+    "document_id": "DOC_000001",
+    "title": "VÍ DỤ - Tài liệu minh họa định dạng import (thay bằng dữ liệu thật)",
+    "document_type": "example",
+    "language": "vi",
+    "sections": [
+      {
+        "section_id": "SEC_000001",
+        "title": "Ví dụ",
+        "paragraphs": [
+          {
+            "paragraph_id": "PAR_000001",
+            "sentences": [
+              {"sentence_id": "SENT_000001", "text": "Bệnh phổi tắc nghẽn mạn tính thường gây ho và khó thở."},
+              {"sentence_id": "SENT_000002", "text": "Hút thuốc lá là yếu tố nguy cơ của bệnh phổi tắc nghẽn mạn tính."}
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "entities": [
+    {"id": "ENT_000001", "type": "Disease", "canonical_name": "Bệnh phổi tắc nghẽn mạn tính", "aliases": ["COPD"]},
+    {"id": "ENT_000002", "type": "Symptom", "canonical_name": "Ho", "aliases": ["Cough"]},
+    {"id": "ENT_000003", "type": "Symptom", "canonical_name": "Khó thở", "aliases": ["Dyspnea"]},
+    {"id": "ENT_000004", "type": "RiskFactor", "canonical_name": "Hút thuốc lá", "aliases": ["Smoking"]}
+  ],
+  "relations": [
+    {"id": "REL_000001", "type": "HAS_SYMPTOM", "source": "ENT_000001", "target": "ENT_000002", "proposition_ids": ["PROP_000001"]},
+    {"id": "REL_000002", "type": "HAS_SYMPTOM", "source": "ENT_000001", "target": "ENT_000003", "proposition_ids": ["PROP_000001"]},
+    {"id": "REL_000003", "type": "RISK_FACTOR_FOR", "source": "ENT_000004", "target": "ENT_000001", "proposition_ids": ["PROP_000002"]}
+  ],
+  "propositions": [
+    {"id": "PROP_000001", "text": "Bệnh phổi tắc nghẽn mạn tính thường gây ho và khó thở.",
+     "evidence": [{"sentence_id": "SENT_000001"}]},
+    {"id": "PROP_000002", "text": "Hút thuốc lá là yếu tố nguy cơ của bệnh phổi tắc nghẽn mạn tính.",
+     "evidence": [{"sentence_id": "SENT_000002"}]}
+  ]
+}

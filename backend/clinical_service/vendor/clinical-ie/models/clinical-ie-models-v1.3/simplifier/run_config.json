@@ -1,0 +1,8 @@
+{
+  "task": "clinical_complex_to_simple",
+  "base_model": "VietAI/vit5-base",
+  "epochs": 4,
+  "max_train_minutes_per_session": 95,
+  "max_source_length": 512,
+  "max_target_length": 512
+}

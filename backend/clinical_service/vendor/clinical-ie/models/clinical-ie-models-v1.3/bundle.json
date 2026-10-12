@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "bundle_name": "clinical-ie-models-v1.3",
+  "version": "1.3",
+  "description": "ViT5 simplifier v1.3 and Joint RELEX extractor v1.3 models bundle",
+  "files": {
+    "joint/final_model/added_tokens.json": "0237a6b114fdd9cfa75edbc2df8e6cc904a6f052c71854ef1ce8b1ca4fcbf8a0",
+    "joint/final_model/gliner_config.json": "bbfe47aed921f616a03bd9ac743ea31dcc01e77d24db15485ce51b4a5fd1779f",
+    "joint/final_model/model.safetensors": "55f3b1ccbef9221967e3d646864359b8845a01ab4ff2e5c0a1616426a5738df2",
+    "joint/final_model/special_tokens_map.json": "b2f1b2f15f29a6b6d9d6ea4eca1675d2c231a71477f151d48f79cc83a625ba21",
+    "joint/final_model/spm.model": "13c8d666d62a7bc4ac8f040aab68e942c861f93303156cc28f5c7e885d86d6e3",
+    "joint/final_model/tokenizer.json": "e0211bb4956572c8c2240a00ee28f0f1f3a23d5339ba250ca549ebe66c368c70",
+    "joint/final_model/tokenizer_config.json": "197d0f7f08d4f4dfff24da2b173c6d27e07b9b5c5784eac9588f09073661d59a",
+    "joint/metrics.json": "48715fececdc68c6750280c44c769a0e8c649f8a9ff1885e300c79999a07c171",
+    "joint/run_config.json": "60002fb40187de5f512bcb53fa961b209950f5d7e98cbb8db6d8048e01a53884",
+    "simplifier/final_model/config.json": "ffd95f81f1665bd7dba68bccb1cc88f10787f9abe355af8a373f2d0f2eac5430",
+    "simplifier/final_model/generation_config.json": "eaaf16b98e47131e3ce155054140429e36c4ed6a23c6ff32c2946ef66ce121ff",
+    "simplifier/final_model/model.safetensors": "4a317d28515316b74aa8bf533a34c99f85bb4be573797c8673a511aa8c28ffae",
+    "simplifier/final_model/special_tokens_map.json": "1bf246679a41f9204ef9085d6ebe314cb3ec1c916db54e2a3be6e49c9c839453",
+    "simplifier/final_model/spiece.model": "59986b62f9f0b90edafb9b073ea7b93d21114a5841219a1ea2399ade73f729c6",
+    "simplifier/final_model/tokenizer.json": "f05c797bae5478e6cc1feadb38066c7745fe0e5295232d2fa44e5bdcb6492700",
+    "simplifier/final_model/tokenizer_config.json": "10fe5aebb65886903db4ddb439d2192e28fc44db7cd87f988377a5d3f913cb97",
+    "simplifier/metrics.json": "1accaaf1530212dbf529a301108872f52729f4ea629b9746ff8ef16e632cf887",
+    "simplifier/run_config.json": "08e0b372882d8143bfaf55146627795d2ee7827aff4017c9137a8fe0a5ba5045"
+  },
+  "packaging_profile": "inference_only_no_test_sentences"
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8fb">
+  <title>Medical KG · Khám phá tri thức</title>
+  <link rel="stylesheet" href="/modules/kg-explorer/static/style.css">
+  <link rel="stylesheet" href="/modules/kg-explorer/static/neo4j_graph.css">
+  <script src="/modules/kg-explorer/static/graph_layout.js" defer></script>
+  <script src="/modules/kg-explorer/static/neo4j_graph.js" defer></script>
+  <script src="/modules/kg-explorer/static/app.js" defer></script>
+<link rel="stylesheet" href="/data-assets/embed.css"><script src="/data-assets/embed.js"></script></head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a href="/modules/kg-explorer/" class="brand" aria-label="Medical KG, trang chủ"><span class="brand-icon">✳</span><span>medical<span class="brand-strong">KG</span><small>KNOWLEDGE EXPLORER</small></span></a>
+      <div class="nav-title">KHÔNG GIAN LÀM VIỆC</div>
+      <div class="nav-item active"><span>◈</span> Khám phá tri thức</div>
+      <a href="/modules/kg-explorer/duplicates" class="nav-item nav-link"><span>◎</span> Rà soát trùng lặp</a>
+      <div class="sidebar-note"><span class="live-dot"></span><span id="connection">Đang kiểm tra kết nối</span></div>
+      <div class="sidebar-bottom"><div class="sidebar-caption">ABOUT THIS WORKSPACE</div><p>Truy vấn đồ thị y khoa từ Neo4j và xem bằng chứng gốc từ MongoDB.</p><span class="side-tag">KG Query Module</span></div>
+    </aside>
+    <main class="main"><a href="/imports?module=kg" style="display:block;padding:12px 24px;color:#006b6c">Nạp nhiều file KG →</a>
+      <header class="topbar"><div class="breadcrumb">Không gian làm việc <span>/</span> <strong>Khám phá tri thức</strong></div><span class="top-pill"><span class="live-dot"></span> Đồ thị tri thức y khoa</span></header>
+      <div class="content">
+        <section class="intro"><div class="eyebrow">MEDICAL KNOWLEDGE GRAPH <span class="eyebrow-line"></span> EXPLORER</div><h1>Khám phá tri thức <em>y khoa.</em></h1><p>Tìm thực thể, khám phá mối quan hệ và kiểm tra nguồn bằng chứng đằng sau mỗi kết quả.</p></section>
+        <form id="queryForm" class="query-panel">
+          <div class="panel-head"><div><span class="panel-kicker">01 / TRUY VẤN</span><h2>Bắt đầu khám phá</h2></div><div class="read-only">◉ &nbsp; Chế độ chỉ đọc</div></div>
+          <div class="mode-tabs" role="group" aria-label="Kiểu truy vấn"><button type="button" class="mode active" data-mode="related">✦ &nbsp; Quan hệ</button><button type="button" class="mode" data-mode="path">⌁ &nbsp; Đường đi</button><button type="button" class="mode" data-mode="chain">⤳ &nbsp; Nhiều bước</button></div>
+          <div class="form-grid"><label class="field"><span>THỰC THỂ BẮT ĐẦU <b>*</b></span><input id="mention" autocomplete="off" maxlength="160" required placeholder="Ví dụ: COPD" aria-label="Tên thực thể bắt đầu"></label><label class="field hidden" id="secondField"><span>THỰC THỂ ĐÍCH <b>*</b></span><input id="target" autocomplete="off" maxlength="160" placeholder="Ví dụ: suy tim" aria-label="Tên thực thể đích"></label><label class="field" id="intentField"><span>NHÓM QUAN HỆ</span><select id="intent" aria-label="Nhóm quan hệ"><option value="related">Tất cả quan hệ</option></select></label><label class="field hidden" id="chainField"><span>KIỂU CHUỖI</span><select id="chain" aria-label="Kiểu chuỗi"><option value="drugs_for_disease">Thuốc điều trị bệnh</option><option value="drug_adverse_effects">Tác dụng phụ của thuốc</option><option value="drug_contraindications">Chống chỉ định của thuốc</option></select></label></div>
+          <div class="form-footer"><div class="examples"><span>THỬ NHANH</span><button type="button" data-example="COPD" data-intent="symptom">COPD · triệu chứng</button><button type="button" data-example="Viêm phổi" data-intent="treatment">Viêm phổi · điều trị</button><button type="button" data-example="COPD" data-target="suy tim">COPD → suy tim</button></div><button type="submit" id="searchBtn" class="search-btn"><span>Khám phá tri thức</span><span class="arrow">↗</span></button></div>
+        </form>
+        <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+        <section id="results" class="results hidden" aria-label="Kết quả truy vấn">
+          <div class="results-header"><div><span class="panel-kicker">02 / KẾT QUẢ</span><h2>Tri thức được tìm thấy <span id="resultCount" class="count-badge">0</span></h2><p id="resultSubtitle"></p></div><button type="button" id="exportBtn" class="export-btn">↓ &nbsp; Xuất JSON</button></div>
+          <div class="metrics"><div class="metric"><span>THỰC THỂ</span><strong id="nodeCount">0</strong><small>Nút trong đồ thị</small></div><div class="metric"><span>QUAN HỆ</span><strong id="edgeCount">0</strong><small>Bộ ba tri thức</small></div><div class="metric"><span>TÀI LIỆU</span><strong id="docCount">0</strong><small>Nguồn tham chiếu</small></div></div>
+          <div class="result-layout"><section class="graph-card"><div class="card-head"><div><span class="card-icon">◈</span><h3>Đồ thị quan hệ</h3></div><div class="neo-controls"><button type="button" id="queryZoomIn" aria-label="Phóng to">+</button><button type="button" id="queryZoomOut" aria-label="Thu nhỏ">−</button><button type="button" id="queryFit" aria-label="Vừa khung" title="Vừa khung">⊡</button><button type="button" id="queryFullscreen" aria-label="Toàn màn hình" title="Toàn màn hình">⛶</button></div></div><div id="graph" class="graph-area"><svg id="graphSvg" role="img" aria-label="Đồ thị thực thể và quan hệ"></svg><div id="graphEmpty" class="graph-empty hidden">Không có quan hệ để hiển thị.</div></div><div class="graph-legend"><span>Màu nút biểu thị loại thực thể</span><span>Kéo nút để tự sắp xếp · kéo nền · cuộn để thu phóng</span><span>→ Chiều quan hệ</span></div></section><aside class="detail-card"><div class="card-head"><div><span class="card-icon violet">▤</span><h3>Chi tiết & bằng chứng</h3></div></div><div id="detail" class="detail-body"><div class="detail-placeholder"><span>✳</span><strong>Chọn một quan hệ</strong><p>Nhấp vào đường nối hoặc một kết quả bên dưới để xem nguồn bằng chứng.</p></div></div></aside></div>
+          <section class="facts-card"><div class="card-head"><div><span class="card-icon amber">☷</span><h3>Danh sách quan hệ</h3></div><span id="factsMeta" class="facts-meta"></span></div><div id="factsList" class="facts-list"></div></section>
+        </section>
+        <footer>MEDICAL KG EXPLORER <span>·</span> Kết quả truy vấn từ cơ sở dữ liệu, kèm thông tin truy vết khi có.</footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

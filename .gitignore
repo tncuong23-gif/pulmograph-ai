@@ -1,0 +1,76 @@
+
+# ==========================================
+# Medical AI Integrated - Git Ignore
+# ==========================================
+
+# Python environments
+venv/
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Frontend
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local model weights
+/backend/models/
+/backend/clinical_service/models/
+checkpoints/
+weights/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.gguf
+*.joblib
+*.pkl
+
+# Runtime data and databases
+/backend/data/
+/data/
+uploads/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Database persistence
+qdrant_storage/
+neo4j/data/
+neo4j/logs/
+docker-volumes/
+
+# Logs and cache
+*.log
+.cache/
+logs/
+tmp/
+temp/
+
+# Archives and backups
+*.zip
+*.7z
+*.rar
+*.bak
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

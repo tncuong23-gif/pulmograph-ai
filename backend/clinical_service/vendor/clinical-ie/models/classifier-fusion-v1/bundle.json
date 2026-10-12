@@ -1,0 +1,42 @@
+{
+  "bundle_name": "classifier-fusion-v1",
+  "version": "1.0",
+  "classifier_type": "late_fusion",
+  "labels": [
+    "Binhthuong",
+    "COPD",
+    "Covid",
+    "Hen",
+    "Lao",
+    "Phuphoi",
+    "Suyhohap",
+    "Trandich",
+    "Trankhi",
+    "Uphoi",
+    "Viemphoi",
+    "Xepphoi"
+  ],
+  "fusion": {
+    "method": "log",
+    "image_weight": 0.3
+  },
+  "files": {
+    "image/convnext_tiny_model.pt": "c6b5894456e9468767dffacd916db950ce979943964e1cb3ef9a01315970498a",
+    "base/bayes_branch.joblib": "80f223ae10568c08fb16a05893544c0fda7ec465e49c81bb447aeef7f38f6bee",
+    "base/bundle.json": "1f914a4a7bfc96e77fd76c2520cbbaaef4d24a1f50df8ef4aeff632366b08f53",
+    "base/text_branch.joblib": "87daae228a820225fc85f529398922be0636050fbe2a1a1ef0524e9fcfa5fb05",
+    "base/graph_branch.joblib": "bad627648716db764d93c129770995bca67936992de88cb46294a3575ea709ae"
+  },
+  "metadata": {
+    "selection_metric": "validation_macro_f1",
+    "no_image_policy": "unchanged_TextGraph_v2",
+    "score_semantics": "uncalibrated_normalized_decision_weights",
+    "selection_sha256": "068df147a3049eb448b3fb68257546a875963aca46b9c2cbe5d1390f995a12f8",
+    "benchmark_sha256": "d75b0d61c8138dde1900b07d4460e618097d250c048f74eef7398979dbcf538a",
+    "limitations": [
+      "Base TextGraph v2 was previously selected after inspecting test; this test is not pristine.",
+      "Validation also selected CNN epoch and base decision biases; no nested holdout.",
+      "One training seed, no patient-level independence certification, research only."
+    ]
+  }
+}

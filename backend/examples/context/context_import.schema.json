@@ -1,0 +1,435 @@
+{
+  "$defs": {
+    "AssertionType": {
+      "enum": [
+        "explicit",
+        "resolved",
+        "inferred"
+      ],
+      "title": "AssertionType",
+      "type": "string"
+    },
+    "Certainty": {
+      "enum": [
+        "confirmed",
+        "probable",
+        "possible",
+        "unknown"
+      ],
+      "title": "Certainty",
+      "type": "string"
+    },
+    "FactType": {
+      "enum": [
+        "condition",
+        "symptom",
+        "medication",
+        "allergy",
+        "observation",
+        "lab_result",
+        "procedure",
+        "family_history",
+        "lifestyle"
+      ],
+      "title": "FactType",
+      "type": "string"
+    },
+    "HistoryMention": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "entity_type": {
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "canonical_name": {
+          "title": "Canonical Name",
+          "type": "string"
+        },
+        "entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Id"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "origin": {
+          "default": "explicit",
+          "enum": [
+            "explicit",
+            "resolved_reference",
+            "clinical_candidate",
+            "legacy_inferred"
+          ],
+          "title": "Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "entity_type",
+        "canonical_name"
+      ],
+      "title": "HistoryMention",
+      "type": "object"
+    },
+    "ImportFact": {
+      "additionalProperties": false,
+      "properties": {
+        "fact_type": {
+          "$ref": "#/$defs/FactType"
+        },
+        "display": {
+          "title": "Display",
+          "type": "string"
+        },
+        "concept_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Concept Id"
+        },
+        "concept_system": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Concept System"
+        },
+        "value": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "dose": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dose"
+        },
+        "frequency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Frequency"
+        },
+        "route": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Route"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "negated": {
+          "default": false,
+          "title": "Negated",
+          "type": "boolean"
+        },
+        "certainty": {
+          "$ref": "#/$defs/Certainty",
+          "default": "confirmed"
+        },
+        "experiencer": {
+          "default": "patient",
+          "title": "Experiencer",
+          "type": "string"
+        },
+        "valid_from": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Valid From"
+        },
+        "valid_to": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Valid To"
+        },
+        "recorded_at": {
+          "format": "date-time",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "assertion": {
+          "$ref": "#/$defs/AssertionType",
+          "default": "explicit"
+        },
+        "statement_type": {
+          "$ref": "#/$defs/StatementType",
+          "default": "fact"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_message_id": {
+          "title": "Source Message Id",
+          "type": "string"
+        },
+        "source_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Text"
+        },
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        }
+      },
+      "required": [
+        "fact_type",
+        "display",
+        "recorded_at",
+        "source_message_id"
+      ],
+      "title": "ImportFact",
+      "type": "object"
+    },
+    "ImportTurn": {
+      "additionalProperties": false,
+      "properties": {
+        "patient_id": {
+          "title": "Patient Id",
+          "type": "string"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "message_id": {
+          "title": "Message Id",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/Role"
+        },
+        "original_text": {
+          "title": "Original Text",
+          "type": "string"
+        },
+        "normalized_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Text"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "mentions": {
+          "items": {
+            "$ref": "#/$defs/HistoryMention"
+          },
+          "title": "Mentions",
+          "type": "array"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        }
+      },
+      "required": [
+        "patient_id",
+        "session_id",
+        "message_id",
+        "role",
+        "original_text",
+        "created_at"
+      ],
+      "title": "ImportTurn",
+      "type": "object"
+    },
+    "Role": {
+      "enum": [
+        "user",
+        "assistant",
+        "system"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "StatementType": {
+      "enum": [
+        "fact",
+        "question",
+        "plan",
+        "hypothesis"
+      ],
+      "title": "StatementType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "patient_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Patient Id",
+      "type": "string"
+    },
+    "session_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "history": {
+      "items": {
+        "$ref": "#/$defs/ImportTurn"
+      },
+      "maxItems": 2000,
+      "minItems": 1,
+      "title": "History",
+      "type": "array"
+    },
+    "facts": {
+      "items": {
+        "$ref": "#/$defs/ImportFact"
+      },
+      "maxItems": 1000,
+      "title": "Facts",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "patient_id",
+    "session_id",
+    "history"
+  ],
+  "title": "ContextFile",
+  "type": "object"
+}

@@ -1,0 +1,108 @@
+version: "0.3.0"
+language: vi
+
+entity_types:
+  SYMPTOM:
+    description: Triệu chứng chủ quan do bệnh nhân hoặc người nhà thuật lại.
+  SIGN:
+    description: Dấu hiệu khách quan quan sát hoặc khám được.
+  CONDITION:
+    description: Bệnh, chẩn đoán, hội chứng hoặc bệnh trong tiền sử.
+  TEST:
+    description: Xét nghiệm, chẩn đoán hình ảnh hoặc phép đo lâm sàng.
+  RESULT:
+    description: Giá trị định lượng hoặc kết quả định tính của TEST.
+  ANATOMY:
+    description: Cơ quan hoặc vị trí giải phẫu.
+  TREATMENT:
+    description: Thuốc, thủ thuật hoặc phương pháp điều trị.
+  TIME:
+    description: Thời điểm, khoảng thời gian hoặc thời lượng.
+
+attributes:
+  assertion:
+    values: [PRESENT, NEGATED, POSSIBLE]
+    default: PRESENT
+  temporality:
+    values: [CURRENT, HISTORY, FUTURE]
+    default: CURRENT
+  severity:
+    values: [MILD, MODERATE, SEVERE]
+  course:
+    values: [IMPROVING, WORSENING, STABLE]
+  laterality:
+    values: [LEFT, RIGHT, BILATERAL]
+
+relation_types:
+  HAS_SYMPTOM:
+    subject: [CASE]
+    object: [SYMPTOM]
+    generated: true
+  HAS_SIGN:
+    subject: [CASE]
+    object: [SIGN]
+    generated: true
+  HAS_CONDITION:
+    subject: [CASE]
+    object: [CONDITION]
+    generated: true
+  HAS_HISTORY:
+    subject: [CASE]
+    object: [CONDITION]
+    generated: true
+  HAS_TEST:
+    subject: [CASE]
+    object: [TEST]
+    generated: true
+  HAS_TREATMENT:
+    subject: [CASE]
+    object: [TREATMENT]
+    generated: true
+  HAS_RESULT:
+    subject: [TEST]
+    object: [RESULT]
+    generated: false
+  REVEALS:
+    subject: [TEST]
+    object: [SIGN, CONDITION, RESULT]
+    generated: false
+  LOCATED_AT:
+    subject: [SYMPTOM, SIGN, CONDITION, TEST, TREATMENT]
+    object: [ANATOMY]
+    generated: false
+  TREATED_WITH:
+    subject: [CASE, SYMPTOM, CONDITION]
+    object: [TREATMENT]
+    generated: false
+  IMPROVED_BY:
+    subject: [SYMPTOM, CONDITION]
+    object: [TREATMENT]
+    generated: false
+  NOT_IMPROVED_BY:
+    subject: [SYMPTOM, CONDITION]
+    object: [TREATMENT]
+    generated: false
+  HAS_DURATION:
+    subject: [SYMPTOM, SIGN, CONDITION, TEST, RESULT, TREATMENT]
+    object: [TIME]
+    generated: false
+  ONSET_AT:
+    subject: [SYMPTOM, SIGN, CONDITION, TEST, RESULT, TREATMENT]
+    object: [TIME]
+    generated: false
+  HAS_FREQUENCY:
+    subject: [SYMPTOM, SIGN, CONDITION, TEST, RESULT, TREATMENT]
+    object: [TIME]
+    generated: false
+  OCCURS_AT:
+    subject: [SYMPTOM, SIGN, CONDITION, TEST, RESULT, TREATMENT]
+    object: [TIME]
+    generated: false
+
+section_policy:
+  tiensubenh_banthan:
+    condition_relation: HAS_HISTORY
+    temporality: HISTORY
+  default:
+    condition_relation: HAS_CONDITION
+    temporality: CURRENT

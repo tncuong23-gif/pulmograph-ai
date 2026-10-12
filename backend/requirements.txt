@@ -1,0 +1,20 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+httpx==0.28.1
+python-multipart>=0.0.18,<1
+python-dotenv==1.0.1
+pydantic>=2.10,<3
+pydantic-settings>=2.5,<3
+neo4j>=5.20,<6
+pymongo==4.11.1
+qdrant-client==1.13.2
+numpy>=1.26,<3
+joblib>=1.3,<2
+scikit-learn==1.6.1
+sentence-transformers==3.3.1
+# Compatible with the pinned medical KG model custom architecture.
+transformers==4.56.1
+openai>=2,<4
+
+# Validate PNG/JPEG uploads before sending them to the isolated Clinical IE service.
+Pillow>=10.4,<13

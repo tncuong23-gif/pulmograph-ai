@@ -1,0 +1,14 @@
+# Install from the extracted handover directory with Python 3.12.
+# Versions below match the environment used for the 2026-09-26 smoke test.
+-e .[inference]
+gliner==0.2.27
+torch==2.13.0
+transformers==4.51.3
+sentencepiece==0.2.2
+lightgbm==4.7.0
+scikit-learn==1.9.1
+numpy==2.5.2
+scipy==1.18.1
+joblib==1.6.0
+PyYAML==6.0.3
+psutil==7.2.2

@@ -1,0 +1,13 @@
+medical-ai-integrated/frontend/src/components/chat/ChatInput.tsx
+medical-ai-integrated/frontend/src/components/chat/ChatContainer.tsx
+medical-ai-integrated/frontend/src/context/ChatContext.tsx
+medical-ai-integrated/frontend/src/api/uploadApi.ts
+medical-ai-integrated/frontend/src/styles.css
+medical-ai-integrated/frontend/tests/app.test.tsx
+medical-ai-integrated/frontend/tests/upload-live.test.ts
+medical-ai-integrated/frontend/README.md
+medical-ai-integrated/backend/app/clinical_routes.py
+medical-ai-integrated/backend/tests/test_clinical_multimodal.py
+medical-ai-integrated/CLINICAL_MULTIMODAL_UPDATE_VI.md
+medical-ai-integrated/AUTO_CLINICAL_ROUTING_VI.md
+medical-ai-integrated/AUTO_CLINICAL_PATCH_FILES.txt

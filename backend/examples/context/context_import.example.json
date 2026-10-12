@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "patient_id": "DEMO_PATIENT_001",
+  "session_id": "DEMO_SESSION_001",
+  "history": [
+    {
+      "patient_id": "DEMO_PATIENT_001",
+      "session_id": "DEMO_SESSION_001",
+      "message_id": "DEMO_MESSAGE_001",
+      "role": "user",
+      "original_text": "Tôi bị ho.",
+      "created_at": "2026-10-10T10:00:00+07:00"
+    }
+  ],
+  "facts": [
+    {
+      "fact_type": "symptom",
+      "display": "ho",
+      "source_message_id": "DEMO_MESSAGE_001",
+      "source_text": "Tôi bị ho.",
+      "recorded_at": "2026-10-10T10:00:00+07:00"
+    }
+  ]
+}

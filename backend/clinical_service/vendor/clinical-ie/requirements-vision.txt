@@ -1,0 +1,6 @@
+# Optional image branch. Install after the existing requirements.txt.
+# Pins match the tested local runtime. Do not upgrade the NLP stack for fusion.
+-e .[vision]
+torch==2.13.0
+torchvision==0.28.0
+Pillow==12.3.0

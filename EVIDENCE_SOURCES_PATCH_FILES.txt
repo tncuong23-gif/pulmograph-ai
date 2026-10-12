@@ -1,0 +1,32 @@
+Overlay CONTENTS of medical-ai-integrated on patient-review full baseline. Update backend and frontend together.
+No .env, database or environment changes required.
+
+EVIDENCE_SOURCES_PATCH_FILES.txt
+EVIDENCE_SOURCES_UPDATE_VI.md
+README_VI.md
+backend/app/clinical_routes.py
+backend/app/main.py
+backend/app/services/assessment.py
+backend/app/services/evidence.py
+backend/app/services/ollama.py
+backend/app/services/orchestrator.py
+backend/app/storage.py
+backend/tests/test_clinical_multimodal.py
+backend/tests/test_embedded.py
+backend/tests/test_evidence_filter.py
+backend/tests/test_kg_chat_confirmation.py
+backend/tests/test_kg_chat_query.py
+backend/tests/test_kg_comparison.py
+backend/tests/test_voice_stream.py
+frontend/src/components/chat/AssessmentPanel.tsx
+frontend/src/components/chat/EvidenceSources.tsx
+frontend/src/components/chat/KGComparisonTable.tsx
+frontend/src/components/chat/KGQueryDetails.tsx
+frontend/src/components/chat/MessageBubble.tsx
+frontend/src/components/chat/evidence-sources.css
+frontend/src/context/ChatContext.tsx
+frontend/src/types/index.ts
+frontend/tests/assessment.test.tsx
+frontend/tests/evidence-sources.test.tsx
+frontend/tests/kg-comparison.test.tsx
+frontend/tests/kg-query.test.tsx

@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "bundle_name": "classifier-bundle-v2",
+  "labels": [
+    "Binhthuong",
+    "COPD",
+    "Covid",
+    "Hen",
+    "Lao",
+    "Phuphoi",
+    "Suyhohap",
+    "Trandich",
+    "Trankhi",
+    "Uphoi",
+    "Viemphoi",
+    "Xepphoi"
+  ],
+  "fusion_weights": {
+    "text": 0.5294117647058824,
+    "graph": 0.47058823529411764,
+    "bayes": 0.0
+  },
+  "calibrated_biases": [
+    0.6,
+    -0.5,
+    0.49999999999999994,
+    -1.0,
+    0.3,
+    -0.5,
+    0.4,
+    0.2,
+    0.0,
+    0.1,
+    1.2,
+    -1.5
+  ],
+  "files": {
+    "text_branch.joblib": "87daae228a820225fc85f529398922be0636050fbe2a1a1ef0524e9fcfa5fb05",
+    "graph_branch.joblib": "bad627648716db764d93c129770995bca67936992de88cb46294a3575ea709ae",
+    "bayes_branch.joblib": "80f223ae10568c08fb16a05893544c0fda7ec465e49c81bb447aeef7f38f6bee"
+  },
+  "metadata": {
+    "train_config": {
+      "min_df": 2,
+      "max_features": 15000,
+      "n_estimators": 300,
+      "max_depth": 6,
+      "learning_rate": 0.05,
+      "class_weight": "balanced",
+      "prior_temperature": 0.25,
+      "fusion_weights": {
+        "text": 0.45,
+        "graph": 0.4,
+        "bayes": 0.15
+      }
+    },
+    "library_versions": {
+      "python": "3.12.12",
+      "scikit-learn": "1.9.1",
+      "lightgbm": "4.7.0",
+      "joblib": "1.6.0",
+      "numpy": "2.5.2"
+    },
+    "fingerprints": {
+      "schema_yaml": "8d65ebc0dff7577ca504356d809f0d3cf429d3f48b81b4b35596ec3a319fb272",
+      "train_split_text": "2ccf1f1a16a7314565f87b7e104763f0d3f059ed0777040dab41a24f4352e51d",
+      "train_split_targets": "aebd6e8f3dc898d51e55f7ee191ed5687a14730ffa3114e9ded4816ce97a5fc2",
+      "train_split_graphs": "ea7c6504da7944fc8de02b396c5aa6b73ed387f27e0648f3bf1db64f4db6a372"
+    },
+    "label_order": [
+      "Binhthuong",
+      "COPD",
+      "Covid",
+      "Hen",
+      "Lao",
+      "Phuphoi",
+      "Suyhohap",
+      "Trandich",
+      "Trankhi",
+      "Uphoi",
+      "Viemphoi",
+      "Xepphoi"
+    ],
+    "validation_macro_f1": 0.4683179916041595,
+    "validation_balanced_acc": 0.48653469194074944,
+    "parent_validation_metrics": {
+      "validation_macro_f1": 0.4751,
+      "validation_balanced_acc": 0.5127
+    },
+    "inference_config": {
+      "method": "text_graph_val_bias",
+      "fusion_weights": {
+        "text": 0.5294117647058824,
+        "graph": 0.47058823529411764,
+        "bayes": 0.0
+      },
+      "decision_bias_source": "validation_only_from_frozen_benchmark",
+      "retrained": false
+    },
+    "promotion": {
+      "created_at_utc": "2026-10-11T04:07:19.629249+00:00",
+      "source_bundle_manifest_sha256": "107fd3ba913fded51af559b0efdb2418794a70f13cada3207d91be3dc2aae72f",
+      "benchmark_report_sha256": "548eb967ff14969ccd70c90069c3aa37e467e9b7f86707eb0b8a9d03438f81d4",
+      "method": "text_graph_val_bias",
+      "selection_metric": "macro_f1",
+      "selection_split": "test",
+      "test_is_selection_exposed": true,
+      "bias_fit_split": "validation",
+      "validation_selected_method_in_original_benchmark": "text_lr_val_bias",
+      "validation_metrics": {
+        "method": "text_graph_val_bias",
+        "split": "validation",
+        "is_deployed": false,
+        "decision_bias_source": "fit_validation_only_coordinate_search",
+        "records": 1678,
+        "accuracy": 0.6972586412395709,
+        "balanced_accuracy": 0.48653469194074944,
+        "macro_precision": 0.4769586071865433,
+        "macro_recall": 0.48653469194074944,
+        "macro_f1": 0.4683179916041595,
+        "weighted_f1": 0.696565383663545,
+        "micro_f1": 0.6972586412395709,
+        "rare_classes_macro_f1": 0.34500000000000003,
+        "top3_accuracy": 0.9153754469606674,
+        "top5_accuracy": 0.968414779499404,
+        "macro_f1_ci95_low": 0.4208779910938449,
+        "macro_f1_ci95_high": 0.5203147466422671
+      },
+      "selection_test_metrics": {
+        "method": "text_graph_val_bias",
+        "split": "test",
+        "is_deployed": false,
+        "decision_bias_source": "fit_validation_only_coordinate_search",
+        "records": 1683,
+        "accuracy": 0.6737967914438503,
+        "balanced_accuracy": 0.44798742546815934,
+        "macro_precision": 0.4609024082324848,
+        "macro_recall": 0.44798742546815934,
+        "macro_f1": 0.43218564469027637,
+        "weighted_f1": 0.674417386107238,
+        "micro_f1": 0.6737967914438503,
+        "rare_classes_macro_f1": 0.305004066142586,
+        "top3_accuracy": 0.9138443256090315,
+        "top5_accuracy": 0.9691027926322044,
+        "macro_f1_ci95_low": 0.38794682627710114,
+        "macro_f1_ci95_high": 0.48043671800732
+      },
+      "warning": "User-selected best observed test Macro-F1; not an independent estimate of the selected model's generalization. Requires a new locked test cohort.",
+      "bayes_compatibility_note": "Bayes payload retained for the existing 3-file loader/output contract; fusion weight is exactly zero."
+    }
+  },
+  "version": "2.0",
+  "active_branches": [
+    "text",
+    "graph"
+  ]
+}

@@ -1,0 +1,4 @@
+# Install ONLY in the separate .venv-vieneu environment, Python 3.12.
+# CPU/ONNX default; no PyTorch installation needed for this service.
+vieneu==3.8.3
+uvicorn==0.54.0

@@ -1,0 +1,33 @@
+/* Light graph workspace shared by query results and JSON preview. */
+.graph-area,.upload-canvas{background:#fff;background-image:radial-gradient(#e1e8ef 1px,transparent 1px);background-size:24px 24px;overflow:hidden}
+.graph-area{height:420px}
+.upload-canvas{height:520px;min-height:0;overflow:hidden}
+#graphSvg,#uploadSvg{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+#graphSvg:active,#uploadSvg:active{cursor:grabbing}
+.neo-node{cursor:grab;touch-action:none}
+.neo-node.dragging{cursor:grabbing;filter:drop-shadow(0 5px 10px #21466055)}
+.neo-node circle{stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 4px 7px #18314d44)}
+.neo-node circle.linked{stroke:#0b6d63;stroke-width:4}
+.neo-node circle.center{stroke:#123753;stroke-width:4;filter:drop-shadow(0 5px 9px #18314d55)}
+.neo-node:focus-visible circle{stroke:#172b4d;stroke-width:5}
+.neo-name{fill:#fff;font:800 11px Manrope,'Segoe UI',sans-serif;paint-order:stroke;stroke:#17233833;stroke-width:1px;pointer-events:none}
+.neo-line{stroke:#64748b;stroke-width:2;opacity:.64}
+.neo-edge-hit{stroke:transparent;stroke-width:16;cursor:pointer}
+.neo-relation{fill:#334155;font:800 11px Manrope,'Segoe UI',sans-serif;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round;pointer-events:none}
+.neo-edge.dense .neo-relation{display:none}
+.neo-edge:hover .neo-line,.neo-edge.selected-edge .neo-line{stroke:#0d857c;stroke-width:3.2;opacity:1}
+.neo-edge:hover .neo-relation,.neo-edge.selected-edge .neo-relation{display:block;fill:#086b64}
+.neo-controls{display:inline-flex;gap:5px;align-items:center}
+.neo-controls button{border:1px solid #cbdde2;background:#f7fbfb;border-radius:7px;min-width:31px;height:31px;padding:0 6px;font-weight:800;color:#176c70;cursor:pointer}
+.neo-controls button:hover{background:#e1f5f0;border-color:#84c5b7}
+.neo-controls button:focus-visible{outline:2px solid #0d817d;outline-offset:2px}
+.graph-detail-line{padding:9px 16px;background:#edf5f4;border-top:1px solid #dce9e8;color:#355e62;font-size:11px;line-height:1.5;min-height:36px}
+.graph-empty{color:#66788a}
+/* The graph section fills the viewport; the relation list remains usable in preview. */
+.graph-card:fullscreen,.graph-card.kg-fullscreen,.upload-graph:fullscreen,.upload-graph.kg-fullscreen{position:fixed;inset:0;width:100vw;height:100dvh;z-index:10000;background:#fff;border-radius:0;margin:0;display:flex;flex-direction:column;overflow:hidden}
+.graph-card:fullscreen .graph-area,.graph-card.kg-fullscreen .graph-area{height:auto;flex:1;min-height:0}
+.upload-graph:fullscreen .upload-graph-grid,.upload-graph.kg-fullscreen .upload-graph-grid{flex:1;min-height:0}
+.upload-graph:fullscreen .upload-canvas,.upload-graph.kg-fullscreen .upload-canvas{height:auto;min-height:0}
+.upload-graph:fullscreen .upload-edges,.upload-graph.kg-fullscreen .upload-edges{max-height:none;min-height:0}
+body:has(.kg-fullscreen){overflow:hidden}
+@media(max-width:900px){.upload-graph:fullscreen .upload-graph-grid,.upload-graph.kg-fullscreen .upload-graph-grid{display:flex;flex-direction:column}.upload-graph:fullscreen .upload-canvas,.upload-graph.kg-fullscreen .upload-canvas{flex:1}.upload-graph:fullscreen .upload-edges,.upload-graph.kg-fullscreen .upload-edges{max-height:24vh}}

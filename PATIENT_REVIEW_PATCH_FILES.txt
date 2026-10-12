@@ -1,0 +1,19 @@
+Apply on supplied medical-ai-integrated(1).zip. Overlay CONTENTS of medical-ai-integrated onto existing root.
+No private .env, runtime data or environments included.
+
+PATIENT_REVIEW_PATCH_FILES.txt
+PATIENT_REVIEW_UPDATE_VI.md
+README_VI.md
+backend/app/modules/context/application/extractor.py
+backend/app/modules/context/application/patient_assertion.py
+backend/app/services/assessment.py
+backend/app/services/assessment_facts.py
+backend/app/services/voice.py
+backend/app/storage.py
+backend/tests/test_assessment_steps.py
+backend/tests/test_assessment_workflow.py
+frontend/src/components/chat/AssessmentPanel.tsx
+frontend/src/types/index.ts
+frontend/tests/app.test.tsx
+frontend/tests/assessment-integration.test.tsx
+frontend/tests/assessment.test.tsx

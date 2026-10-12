@@ -1,0 +1,29 @@
+Patch baseline: previous medical-ai-integrated-verified-full.zip.
+Read KG_IDENTITY_FALLBACK_UPDATE_VI.md.
+
+KG_IDENTITY_FALLBACK_UPDATE_VI.md
+KG_IDENTITY_PATCH_FILES.txt
+backend/app/bulk_import/kg.py
+backend/app/bulk_import/web/app.js
+backend/app/modules/kg_import/adapters/memory.py
+backend/app/modules/kg_import/adapters/neo4j.py
+backend/app/modules/kg_import/entity_linking.py
+backend/app/modules/kg_import/entity_vector.py
+backend/app/modules/kg_import/identity_review.py
+backend/app/modules/kg_import/service.py
+backend/app/modules/kg_query/cypher.py
+backend/app/modules/kg_query/duplicate_review.py
+backend/app/modules/kg_query/web/duplicates.js
+backend/app/services/orchestrator.py
+backend/app/services/retrieval_quality.py
+backend/scripts/kg/audit_identity.py
+backend/tests/test_embedded.py
+backend/tests/test_kg_chat_query.py
+backend/tests/test_kg_comparison.py
+backend/tests/test_kg_identity_fallback.py
+backend/tests/test_kg_review_workflow.py
+backend/tests/test_orchestrator.py
+backend/tests/upstream/kg/test_duplicate_review.py
+frontend/src/components/layout/Sidebar.tsx
+frontend/src/styles.css
+frontend/tests/kg-file-review.test.ts

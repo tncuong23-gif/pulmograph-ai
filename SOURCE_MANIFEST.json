@@ -1,0 +1,27 @@
+[
+  {
+    "file": "medical-ai-record-only-mode-fix(1).zip",
+    "sha256": "cc4115560a94dfb95e03e562c9e200cb344e3f20f3c73d1b982f9891e84d01cb"
+  },
+  {
+    "file": "medical-rag.zip",
+    "sha256": "e7b1da334289a57ee4392e73c2cb8364428d389a14ce6ba06d910054bc7113bb"
+  },
+  {
+    "file": "kg_module.zip",
+    "sha256": "533c5f3d640b9c5067868be96990d870d80efbd85309e0955faed40c77636896"
+  },
+  {
+    "file": "medical_context_project_qwen25_7b_context_v2_3_context_need.zip",
+    "sha256": "cb5cf9cdb5534b8d282f493fa0f144839f47f0d71a72733b1e65a9773b924c3f"
+  },
+  {
+    "file": "medical_context_project_qwen25_7b_context_v2_3_context_need(1).zip",
+    "sha256": "cb5cf9cdb5534b8d282f493fa0f144839f47f0d71a72733b1e65a9773b924c3f"
+  },
+  {
+    "file": "clinical-ie-handover-0.2.0-research.zip",
+    "sha256": "7d1864da63dace04a2b9d61b4b93a96b5c6b81b3b5eb3ee6ac6031693418fd8d",
+    "integration": "v14: runtime source, IE metadata, late-fusion bundle, reference-index; excludes research datasets/notebooks; two IE weights absent in supplied archive"
+  }
+]

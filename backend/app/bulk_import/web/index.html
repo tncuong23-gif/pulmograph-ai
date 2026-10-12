@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#008b8b"><title>Medical AI · Nạp dữ liệu</title><link rel="stylesheet" href="/imports-assets/style.css"><script src="/imports-assets/app.js" defer></script><link rel="stylesheet" href="/data-assets/embed.css"><script src="/data-assets/embed.js"></script></head>
+<body>
+<header><a class="brand" href="/imports"><span class="brand-mark" aria-hidden="true">+</span><span>Medical AI<small>Không gian quản lý dữ liệu</small></span></a><nav aria-label="Điều hướng"><a href="/modules/rag/">RAG</a><a href="/modules/kg-explorer/">Khám phá KG</a><a href="/modules/context/ui">Context</a></nav></header>
+<main>
+  <div class="eyebrow">DỮ LIỆU CÓ NGUỒN · NẠP CÓ KIỂM TRA</div>
+  <section class="intro"><div><h1>Nạp dữ liệu, theo từng lượt.</h1><p>Chọn nhiều JSON hoặc lấy dữ liệu từ thư mục. Xem trước, xác nhận và theo dõi kết quả của từng file.</p></div><span class="intro-badge">JSON → Cơ sở dữ liệu</span></section>
+  <div class="tabs" aria-label="Loại dữ liệu"><a href="/imports?module=kg" data-tab="kg">Knowledge Graph</a><a href="/imports?module=context" data-tab="context">Context & Patient Graph</a></div>
+  <div id="notice" class="notice" role="status"></div>
+  <div id="error" class="error" role="alert" hidden></div>
+  <section class="panel source-panel" aria-labelledby="sourceTitle"><div class="section-head"><div><div class="eyebrow">01 / NGUỒN DỮ LIỆU</div><h2 id="sourceTitle">Chọn file để bắt đầu</h2></div><span id="moduleTag" class="tag"></span></div>
+    <div class="source-grid"><label id="dropzone" class="dropzone"><span class="upload-icon" aria-hidden="true">↑</span><strong>Chọn hoặc kéo thả các file JSON</strong><span>Tối đa 20 MiB/file · Hỗ trợ nạp riêng file đã sửa</span><input id="files" type="file" accept=".json,application/json" multiple aria-label="Chọn nhiều file JSON"></label>
+    <div class="folder-box"><h3>Nạp từ thư mục backend</h3><code id="folderPath"></code><p>Bao gồm thư mục con. Lượt nạp chỉ bắt đầu khi bạn bấm nút.</p><button id="folderPreview" class="secondary" type="button">Xem trước toàn bộ thư mục</button></div></div>
+    <div id="selectedFiles" class="selected-files" aria-live="polite">Chưa chọn file.</div>
+    <div class="actions"><button id="validateFiles" class="secondary" type="button" disabled>Kiểm tra file đã chọn</button><button id="previewFiles" type="button" disabled>Xem trước file đã chọn</button><button id="indexKg" class="text-button" type="button">Chuẩn bị / đồng bộ chỉ mục KG</button></div>
+  </section>
+  <section class="panel" aria-labelledby="jobTitle"><div class="section-head"><div><div class="eyebrow">02 / THEO DÕI & XÁC NHẬN</div><h2 id="jobTitle">Kết quả từng file</h2></div><button id="refresh" class="secondary" type="button">Làm mới</button></div>
+    <p id="jobMeta" class="muted">Chưa có lượt nạp. Các lượt hoàn tất sẽ được lưu để xem lại.</p><progress id="progress" value="0" max="1" aria-label="Tiến độ xử lý"></progress>
+    <div id="metrics" class="metrics"></div>
+    <div class="table-wrap"><table><thead><tr><th><input id="selectAll" type="checkbox" aria-label="Chọn tất cả file hợp lệ" disabled></th><th>File / Định danh</th><th>Kết quả</th><th>Chi tiết</th><th>Xem trước</th></tr></thead><tbody id="rows"><tr><td colspan="5" class="empty">File đã kiểm tra sẽ xuất hiện tại đây.</td></tr></tbody></table></div>
+    <div class="pager"><button id="prevPage" class="text-button" type="button">← Trước</button><span id="pageInfo"></span><button id="nextPage" class="text-button" type="button">Tiếp →</button></div>
+    <div id="approval" class="approval" hidden><label><input id="confirm" type="checkbox"><span id="confirmText"></span></label><div class="actions"><button id="commit" type="button" disabled>Xác nhận nạp các file đã chọn</button><button id="retry" class="secondary" type="button" hidden>Thử lại các file lỗi / ghi một phần</button></div></div>
+    <button id="repreview" type="button" class="text-button" hidden>Xem trước lại các file của lượt này</button>
+    <div id="reports" class="report-links"></div>
+  </section>
+  <section class="panel"><div class="section-head"><div><div class="eyebrow">03 / LỊCH SỬ</div><h2>Các lượt gần đây</h2></div><span class="muted">Giữ tiến độ khi đóng trang</span></div><div id="history" class="history"></div></section>
+  <footer>Medical AI · Mỗi loại dữ liệu có thư mục nguồn và báo cáo riêng.</footer>
+</main>
+<dialog id="reviewDialog"><div class="section-head"><h2 id="reviewTitle">Xem trước file</h2><button id="closeReview" class="secondary" type="button" aria-label="Đóng xem trước">Đóng</button></div><div id="reviewBody"></div><div id="reviewFeedback" role="status"></div></dialog>
+</body></html>

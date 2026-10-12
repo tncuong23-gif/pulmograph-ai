@@ -1,0 +1,25 @@
+KG comparison v12 — cập nhật từ v11
+Baseline SHA-256: 2c95cf4f1d5650008759653c9073b030c5669c5dda20e8cc957f87c511fbad00
+
+KG_COMPARE_PATCH_FILES.txt
+KG_COMPARE_TEST_REPORT.md
+KG_COMPARE_UPDATE_VI.md
+README_VI.md
+backend/app/modules/kg_query/comparison.py
+backend/app/modules/kg_query/question_analysis.py
+backend/app/modules/kg_query/retrieval_api.py
+backend/app/modules/kg_query/service.py
+backend/app/services/kg_chat.py
+backend/app/services/ollama.py
+backend/app/services/orchestrator.py
+backend/docs/kg/API_INTEGRATION.md
+backend/docs/kg/KG_QUERY.md
+backend/docs/kg/retrieval-openapi.json
+backend/tests/test_kg_chat_confirmation.py
+backend/tests/test_kg_chat_query.py
+backend/tests/test_kg_comparison.py
+frontend/src/components/chat/KGComparisonTable.tsx
+frontend/src/components/chat/KGQueryDetails.tsx
+frontend/src/components/chat/kg-query.css
+frontend/src/types/index.ts
+frontend/tests/kg-comparison.test.tsx

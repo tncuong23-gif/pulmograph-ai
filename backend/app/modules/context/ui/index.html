@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Medical Context Graph - Test Console</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --border: #dfe5ee;
+      --text: #172033;
+      --muted: #667085;
+      --primary: #3157d5;
+      --primary-strong: #2446b6;
+      --success: #157347;
+      --danger: #b42318;
+      --warning: #b54708;
+      --shadow: 0 14px 34px rgba(30, 41, 59, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 24px;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: #3157d5;
+      color: white;
+      font-weight: 800;
+      letter-spacing: .02em;
+      box-shadow: 0 8px 20px rgba(49, 87, 213, .22);
+    }
+    .brand h1 { margin: 0; font-size: 17px; line-height: 1.2; }
+    .brand p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+
+    .status-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #98a2b3; }
+    .status.ok .dot { background: #12b76a; box-shadow: 0 0 0 4px rgba(18, 183, 106, .12); }
+    .status.bad .dot { background: #f04438; box-shadow: 0 0 0 4px rgba(240, 68, 56, .12); }
+
+    .page { max-width: 1500px; margin: 0 auto; padding: 22px; }
+    .grid { display: grid; grid-template-columns: minmax(360px, .86fr) minmax(520px, 1.45fr); gap: 18px; align-items: start; }
+    .stack { display: grid; gap: 18px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-head h2 { margin: 0; font-size: 15px; }
+    .card-head span { color: var(--muted); font-size: 12px; }
+    .card-body { padding: 18px; }
+
+    .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: grid; gap: 7px; min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-size: 12px; font-weight: 650; color: #344054; }
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid #cfd7e3;
+      border-radius: 10px;
+      background: white;
+      color: var(--text);
+      outline: none;
+      padding: 10px 11px;
+      transition: border .15s ease, box-shadow .15s ease;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #6e8ae7;
+      box-shadow: 0 0 0 3px rgba(49, 87, 213, .1);
+    }
+    textarea { resize: vertical; min-height: 112px; line-height: 1.55; }
+
+    .actions { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 9px 13px;
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .05s ease, background .15s ease, border .15s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary { background: var(--primary); color: white; }
+    .btn.primary:hover { background: var(--primary-strong); }
+    .btn.secondary { background: white; color: #344054; border-color: var(--border); }
+    .btn.secondary:hover { background: #f8fafc; }
+    .btn.danger { background: #fff; color: var(--danger); border-color: #fecdca; }
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
+
+    .hint { margin-top: 11px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    code.inline { background: #f2f4f7; border-radius: 6px; padding: 2px 5px; color: #344054; }
+
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .metric { padding: 13px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-2); min-width: 0; }
+    .metric .k { display: block; color: var(--muted); font-size: 11px; margin-bottom: 6px; }
+    .metric .v { display: block; font-size: 15px; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .normalized {
+      margin-top: 12px;
+      border: 1px solid #d9e1fb;
+      background: #f6f8ff;
+      border-radius: 12px;
+      padding: 13px 14px;
+    }
+    .normalized .k { color: #5268a6; font-size: 11px; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; }
+    .normalized .v { margin-top: 7px; font-size: 14px; line-height: 1.55; white-space: pre-wrap; }
+
+    .tabs { display: flex; gap: 6px; padding: 10px 12px 0; flex-wrap: wrap; }
+    .tab {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      border-radius: 9px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .tab.active { color: var(--primary); background: #eef2ff; border-color: #dce4ff; }
+    .panel { display: none; padding: 12px 14px 16px; }
+    .panel.active { display: block; }
+
+    pre {
+      margin: 0;
+      border: 1px solid #263044;
+      border-radius: 12px;
+      background: #111827;
+      color: #d9e2f2;
+      min-height: 300px;
+      max-height: 560px;
+      overflow: auto;
+      padding: 14px;
+      font: 12px/1.6 "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .empty { padding: 30px 16px; text-align: center; color: var(--muted); font-size: 13px; }
+    .list { display: grid; gap: 10px; max-height: 560px; overflow: auto; }
+    .item { border: 1px solid var(--border); border-radius: 12px; padding: 12px 13px; background: #fff; }
+    .item-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 7px; }
+    .tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 8px; font-size: 10px; font-weight: 800; background: #eef2ff; color: #3448a3; text-transform: uppercase; }
+    .item time { font-size: 10px; color: var(--muted); }
+    .item .text { font-size: 13px; line-height: 1.55; white-space: pre-wrap; }
+    .subtext { margin-top: 6px; font-size: 11px; color: var(--muted); }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 50;
+      max-width: 420px;
+      border-radius: 12px;
+      padding: 11px 14px;
+      color: white;
+      background: #344054;
+      box-shadow: 0 14px 30px rgba(16,24,40,.22);
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .18s ease;
+      font-size: 13px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+
+    .spinner {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      border: 2px solid rgba(255,255,255,.45);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: -2px;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 1050px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .topbar { align-items: flex-start; padding: 12px 14px; }
+      .page { padding: 12px; }
+      .fields, .metrics { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .brand p { display: none; }
+    }
+  </style>
+<link rel="stylesheet" href="/data-assets/embed.css"><script src="/data-assets/embed.js"></script></head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">MC</div>
+      <div>
+        <h1>Medical Context Graph · Context Resolver v2.3 · Context Need + Discourse Focus + Patient Gate</h1>
+        <p>V2 · Discourse Entity · Candidate Ranking · Resolution Validation</p>
+      </div>
+    </div>
+    <div class="status-wrap">
+      <div id="backendStatus" class="status"><span class="dot"></span><span>Đang kiểm tra...</span></div>
+      <a class="btn secondary" href="/docs" target="_blank" rel="noreferrer">Swagger</a>
+    </div>
+  </header>
+
+  <main class="page"><a href="/imports?module=context" style="display:block;padding:12px 24px;color:#006b6c">Nạp lịch sử và dữ kiện từ nhiều file →</a>
+    <div class="grid">
+      <section class="stack">
+        <div class="card" id="contextResolveCard">
+          <div class="card-head">
+            <div>
+              <h2>Gửi câu hỏi vào Context Resolver</h2>
+              <span>POST /v1/context/resolve</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="fields">
+              <div class="field context-identity">
+                <label for="patientId">Patient ID</label>
+                <input id="patientId" value="P001" autocomplete="off" />
+              </div>
+              <div class="field context-identity">
+                <label for="sessionId">Session ID</label>
+                <input id="sessionId" value="S001" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="messageId">Message ID</label>
+                <input id="messageId" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="timestamp">Timestamp</label>
+                <input id="timestamp" autocomplete="off" />
+              </div>
+              <div class="field full">
+                <label for="question">Câu hỏi / phát biểu của bệnh nhân</label>
+                <textarea id="question">Tôi bị ho và sốt ba ngày nay.</textarea>
+              </div>
+            </div>
+            <div class="actions">
+              <button id="sendBtn" class="btn primary" type="button">Gửi & phân tích</button>
+              <button id="newMessageBtn" class="btn secondary" type="button">Tạo Message ID mới</button>
+              <button id="sampleFollowupBtn" class="btn secondary" type="button">Mẫu câu theo ngữ cảnh</button>
+            </div>
+            <div class="hint">
+              Gửi câu đầu trước, sau đó thử câu <code class="inline">Nó vẫn chưa hết.</code> để kiểm tra khả năng phục hồi ngữ cảnh.
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="contextTurnCard">
+          <div class="card-head">
+            <div>
+              <h2>Thêm turn của Assistant/System</h2>
+              <span>POST /v1/history/turns</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="fields">
+              <div class="field">
+                <label for="turnRole">Role</label>
+                <select id="turnRole">
+                  <option value="assistant">assistant</option>
+                  <option value="system">system</option>
+                  <option value="user">user</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="turnMessageId">Message ID</label>
+                <input id="turnMessageId" autocomplete="off" />
+              </div>
+              <div class="field full">
+                <label for="turnText">Nội dung turn</label>
+                <textarea id="turnText" style="min-height:88px">Bạn cho biết đang bị ho và sốt trong ba ngày.</textarea>
+              </div>
+            </div>
+            <div class="actions">
+              <button id="saveTurnBtn" class="btn primary" type="button">Lưu vào History</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stack">
+        <div class="card" id="contextResultCard">
+          <div class="card-head">
+            <div>
+              <h2>Kết quả xử lý gần nhất</h2>
+              <span id="lastEndpoint">Chưa có request</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="metrics">
+              <div class="metric"><span class="k">Subject</span><span id="metricSubject" class="v">—</span></div>
+              <div class="metric"><span class="k">Confidence</span><span id="metricConfidence" class="v">—</span></div>
+              <div class="metric"><span class="k">Status</span><span id="metricStatus" class="v">—</span></div>
+              <div class="metric"><span class="k">Method</span><span id="metricMethod" class="v">—</span></div>
+              <div class="metric"><span class="k">Stored facts</span><span id="metricFacts" class="v">—</span></div>
+              <div class="metric"><span class="k">Graph updated</span><span id="metricUpdated" class="v">—</span></div>
+            </div>
+            <div class="normalized">
+              <div class="k">Normalized question</div>
+              <div id="normalizedQuestion" class="v">Chưa có dữ liệu.</div>
+            </div>
+            <div class="normalized" style="margin-top:10px">
+              <div class="k">Active discourse topic</div>
+              <div id="activeTopicSummary" class="v">Chưa có dữ liệu.</div>
+            </div>
+            <div class="normalized" style="margin-top:10px">
+              <div class="k">Antecedent candidates</div>
+              <div id="candidateSummary" class="v">Chưa có dữ liệu.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tabs">
+            <button class="tab active" data-tab="jsonPanel">JSON Response</button>
+            <button class="tab" data-tab="historyPanel">History</button>
+            <button class="tab" data-tab="patientPanel">Patient Context</button>
+          </div>
+
+          <div id="jsonPanel" class="panel active">
+            <div class="actions" style="margin:0 0 10px">
+              <button id="copyJsonBtn" class="btn secondary" type="button">Copy JSON</button>
+              <button id="clearJsonBtn" class="btn secondary" type="button">Xóa màn hình</button>
+            </div>
+            <pre id="jsonOutput">{
+  "message": "Gửi một request để xem kết quả tại đây."
+}</pre>
+          </div>
+
+          <div id="historyPanel" class="panel">
+            <div class="fields" style="margin-bottom:10px">
+              <div class="field full">
+                <label for="historyQuery">Query lọc history</label>
+                <input id="historyQuery" placeholder="Ví dụ: ho sốt" />
+              </div>
+            </div>
+            <div class="actions" style="margin:0 0 10px">
+              <button id="loadHistoryBtn" class="btn secondary" type="button">Tải History</button>
+            </div>
+            <div id="historyList" class="empty">Chưa tải dữ liệu History.</div>
+          </div>
+
+          <div id="patientPanel" class="panel">
+            <div class="fields" style="margin-bottom:10px">
+              <div class="field full">
+                <label for="patientQuery">Query lọc patient context</label>
+                <input id="patientQuery" placeholder="Ví dụ: ho sốt" />
+              </div>
+            </div>
+            <div class="actions" style="margin:0 0 10px">
+              <button id="loadPatientBtn" class="btn secondary" type="button">Tải Patient Context</button>
+            </div>
+            <div id="patientList" class="empty">Chưa tải Patient Context.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let lastJson = null;
+
+    function nowIso() {
+      return new Date().toISOString();
+    }
+
+    function makeId(prefix) {
+      const stamp = Date.now().toString(36).toUpperCase();
+      const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+      return `${prefix}_${stamp}_${rand}`;
+    }
+
+    function resetMessageIds() {
+      $("messageId").value = makeId("M");
+      $("turnMessageId").value = makeId("A");
+      $("timestamp").value = nowIso();
+    }
+
+    function showToast(message, type = "success") {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      window.clearTimeout(showToast._timer);
+      showToast._timer = window.setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    function pretty(value) {
+      return JSON.stringify(value, null, 2);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    async function requestJson(url, options = {}) {
+      const response = await fetch(url, {
+        ...options,
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+      });
+
+      const text = await response.text();
+      let data = null;
+      if (text) {
+        try { data = JSON.parse(text); }
+        catch { data = { raw: text }; }
+      }
+
+      if (!response.ok) {
+        const err = new Error(`HTTP ${response.status}`);
+        err.data = data;
+        throw err;
+      }
+      return data;
+    }
+
+    async function checkHealth() {
+      const badge = $("backendStatus");
+      try {
+        const data = await requestJson("/modules/context/health");
+        badge.className = "status ok";
+        badge.innerHTML = `<span class="dot"></span><span>${escapeHtml(data.app)} · ${escapeHtml(data.graph_backend)}</span>`;
+      } catch (error) {
+        badge.className = "status bad";
+        badge.innerHTML = `<span class="dot"></span><span>API không phản hồi</span>`;
+      }
+    }
+
+    function setBusy(button, busy, label) {
+      button.disabled = busy;
+      if (busy) {
+        button.dataset.original = button.textContent;
+        button.innerHTML = `<span class="spinner"></span>${label}`;
+      } else {
+        button.textContent = button.dataset.original || button.textContent;
+      }
+    }
+
+    function showJson(data, endpoint = "") {
+      lastJson = data;
+      $("jsonOutput").textContent = pretty(data);
+      if (endpoint) $("lastEndpoint").textContent = endpoint;
+    }
+
+    function requireIdentity(requireSession = true) {
+      if (!$("patientId").value.trim() || (requireSession && !$("sessionId").value.trim())) {
+        showToast(requireSession ? "Nhập Patient ID và Session ID trước khi thực hiện." : "Nhập Patient ID trước khi tải dữ kiện.", "error");
+        return false;
+      }
+      return true;
+    }
+
+    async function resolveContext() {
+      if (!requireIdentity(true)) return;
+      const button = $("sendBtn");
+      const question = $("question").value.trim();
+      if (!question) {
+        showToast("Vui lòng nhập câu hỏi.", "error");
+        return;
+      }
+
+      const payload = {
+        patient_id: $("patientId").value.trim(),
+        session_id: $("sessionId").value.trim(),
+        message_id: $("messageId").value.trim() || makeId("M"),
+        question,
+        timestamp: $("timestamp").value.trim() || nowIso(),
+      };
+
+      setBusy(button, true, "Đang phân tích...");
+      try {
+        const data = await requestJson("/modules/context/v1/context/resolve", {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        showJson(data, "POST /v1/context/resolve");
+        $("metricSubject").textContent = data.resolved_subject ?? "—";
+        $("metricConfidence").textContent = data.resolution_confidence == null ? "—" : Number(data.resolution_confidence).toFixed(3);
+        $("metricStatus").textContent = data.resolution_status ?? "—";
+        $("metricMethod").textContent = data.resolution_method ?? "—";
+        $("metricFacts").textContent = data.stored_fact_count ?? "—";
+        $("metricUpdated").textContent = data.patient_graph_updated ? "Yes" : "No";
+        $("normalizedQuestion").textContent = data.normalized_question || "—";
+        const activeTopic = data.active_topic;
+        $("activeTopicSummary").textContent = activeTopic
+          ? `${activeTopic.canonical_name} [${activeTopic.entity_type}] · tier=${activeTopic.priority_tier ?? "?"} · ${activeTopic.origin || "?"} · ${activeTopic.focus_reason || "active"}`
+          : "Không có active topic duy nhất (có thể không cần resolve hoặc đang mơ hồ).";
+        const candidates = Array.isArray(data.candidate_entities) ? data.candidate_entities : [];
+        $("candidateSummary").textContent = candidates.length
+          ? candidates.map((c, i) => `${i + 1}. ${c.canonical_name} [${c.entity_type}] tier=${c.priority_tier ?? "?"} · score=${Number(c.score ?? 0).toFixed(3)} · origin=${c.origin || "?"} · ${c.focus_reason || "normal"} · ${c.source_message_id || "patient-context"}`).join("\n")
+          : "Không có candidate.";
+        showToast("Context Resolver xử lý thành công.");
+        $("messageId").value = makeId("M");
+        $("timestamp").value = nowIso();
+      } catch (error) {
+        showJson(error.data || { error: error.message }, "POST /v1/context/resolve · ERROR");
+        showToast(`Gọi API thất bại: ${error.message}`, "error");
+      } finally {
+        setBusy(button, false);
+      }
+    }
+
+    async function saveTurn() {
+      if (!requireIdentity(true)) return;
+      const button = $("saveTurnBtn");
+      const text = $("turnText").value.trim();
+      if (!text) {
+        showToast("Nội dung turn không được để trống.", "error");
+        return;
+      }
+
+      const payload = {
+        patient_id: $("patientId").value.trim(),
+        session_id: $("sessionId").value.trim(),
+        message_id: $("turnMessageId").value.trim() || makeId("A"),
+        role: $("turnRole").value,
+        text,
+        timestamp: nowIso(),
+      };
+
+      setBusy(button, true, "Đang lưu...");
+      try {
+        await requestJson("/modules/context/v1/history/turns", { method: "POST", body: JSON.stringify(payload) });
+        showJson({ status: "saved", ...payload }, "POST /v1/history/turns");
+        $("turnMessageId").value = makeId("A");
+        showToast("Đã lưu turn vào History.");
+      } catch (error) {
+        showJson(error.data || { error: error.message }, "POST /v1/history/turns · ERROR");
+        showToast(`Không lưu được turn: ${error.message}`, "error");
+      } finally {
+        setBusy(button, false);
+      }
+    }
+
+    function historyItem(turn) {
+      const mentions = Array.isArray(turn.mentions) && turn.mentions.length
+        ? turn.mentions.map(m => `${m.canonical_name} [${m.entity_type}; ${m.origin || "legacy"}]`).join(", ")
+        : "Không có mention";
+      return `
+        <div class="item">
+          <div class="item-top">
+            <span class="tag">${escapeHtml(turn.role || "turn")}</span>
+            <time>${escapeHtml(turn.created_at || "")}</time>
+          </div>
+          <div class="text">${escapeHtml(turn.original_text || turn.normalized_text || "")}</div>
+          <div class="subtext">${escapeHtml(turn.message_id || "")} · ${escapeHtml(mentions)}</div>
+        </div>`;
+    }
+
+    async function loadHistory() {
+      if (!requireIdentity(true)) return;
+      const patientId = encodeURIComponent($("patientId").value.trim());
+      const sessionId = encodeURIComponent($("sessionId").value.trim());
+      const query = encodeURIComponent($("historyQuery").value.trim());
+      try {
+        const data = await requestJson(`/modules/context/v1/history?patient_id=${patientId}&session_id=${sessionId}&query=${query}&limit=50`);
+        showJson(data, "GET /v1/history");
+        const items = data.items || [];
+        $("historyList").className = items.length ? "list" : "empty";
+        $("historyList").innerHTML = items.length ? items.map(historyItem).join("") : "Không tìm thấy History turn phù hợp.";
+      } catch (error) {
+        $("historyList").className = "empty";
+        $("historyList").textContent = `Lỗi: ${error.message}`;
+        showToast("Không tải được History.", "error");
+      }
+    }
+
+    function factItem(fact) {
+      const parts = [
+        fact.negated ? "negated" : null,
+        fact.certainty,
+        fact.experiencer,
+        fact.confidence != null ? `confidence=${Number(fact.confidence).toFixed(3)}` : null,
+      ].filter(Boolean).join(" · ");
+      return `
+        <div class="item">
+          <div class="item-top">
+            <span class="tag">${escapeHtml(fact.fact_type || "fact")}</span>
+            <time>${escapeHtml(fact.recorded_at || "")}</time>
+          </div>
+          <div class="text"><strong>${escapeHtml(fact.display || "")}</strong></div>
+          <div class="subtext">${escapeHtml(parts)}</div>
+          ${fact.source_text ? `<div class="subtext">Nguồn: ${escapeHtml(fact.source_text)}</div>` : ""}
+        </div>`;
+    }
+
+    async function loadPatientContext() {
+      if (!requireIdentity(false)) return;
+      const patientId = encodeURIComponent($("patientId").value.trim());
+      const query = encodeURIComponent($("patientQuery").value.trim());
+      try {
+        const data = await requestJson(`/modules/context/v1/patients/${patientId}/context?query=${query}&limit=100`);
+        showJson(data, `GET /v1/patients/${patientId}/context`);
+        const facts = data.facts || [];
+        $("patientList").className = facts.length ? "list" : "empty";
+        $("patientList").innerHTML = facts.length ? facts.map(factItem).join("") : "Patient Context chưa có clinical fact phù hợp.";
+      } catch (error) {
+        $("patientList").className = "empty";
+        $("patientList").textContent = `Lỗi: ${error.message}`;
+        showToast("Không tải được Patient Context.", "error");
+      }
+    }
+
+    document.querySelectorAll(".tab").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((tab) => tab.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach((panel) => panel.classList.remove("active"));
+        button.classList.add("active");
+        $(button.dataset.tab).classList.add("active");
+      });
+    });
+
+    $("sendBtn").addEventListener("click", resolveContext);
+    $("saveTurnBtn").addEventListener("click", saveTurn);
+    $("loadHistoryBtn").addEventListener("click", loadHistory);
+    $("loadPatientBtn").addEventListener("click", loadPatientContext);
+    $("newMessageBtn").addEventListener("click", () => {
+      $("messageId").value = makeId("M");
+      $("timestamp").value = nowIso();
+    });
+    $("sampleFollowupBtn").addEventListener("click", () => {
+      $("question").value = "Nó vẫn chưa hết.";
+      $("messageId").value = makeId("M");
+      $("timestamp").value = nowIso();
+      $("question").focus();
+    });
+    $("copyJsonBtn").addEventListener("click", async () => {
+      if (!lastJson) return showToast("Chưa có JSON để copy.", "error");
+      await navigator.clipboard.writeText(pretty(lastJson));
+      showToast("Đã copy JSON.");
+    });
+    $("clearJsonBtn").addEventListener("click", () => {
+      lastJson = null;
+      $("jsonOutput").textContent = "{}";
+    });
+
+    resetMessageIds();
+    checkHealth();
+    window.setInterval(checkHealth, 15000);
+  </script>
+</body>
+</html>

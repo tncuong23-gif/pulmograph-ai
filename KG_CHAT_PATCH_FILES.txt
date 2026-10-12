@@ -1,0 +1,34 @@
+KG chat v11 — cập nhật từ v10
+Baseline SHA-256: fbb2b66c668e67f66f37d4b5f3a4eb9022628f18ba729fafc61de0e38004c63d
+
+KG_CHAT_PATCH_FILES.txt
+KG_CHAT_TEST_REPORT.md
+KG_CHAT_UPDATE_VI.md
+README_VI.md
+backend/app/main.py
+backend/app/modules/kg_query/entity_lookup.py
+backend/app/modules/kg_query/question_analysis.py
+backend/app/modules/kg_query/retrieval_api.py
+backend/app/modules/kg_query/service.py
+backend/app/schemas.py
+backend/app/services/kg_chat.py
+backend/app/services/modules.py
+backend/app/services/ollama.py
+backend/app/services/orchestrator.py
+backend/docs/kg/API_INTEGRATION.md
+backend/docs/kg/KG_QUERY.md
+backend/docs/kg/retrieval-openapi.json
+backend/tests/test_embedded.py
+backend/tests/test_kg_chat_confirmation.py
+backend/tests/test_kg_chat_query.py
+backend/tests/upstream/kg/fake_neo4j.py
+backend/tests/upstream/kg/test_retrieval_api.py
+frontend/src/components/chat/ChatContainer.tsx
+frontend/src/components/chat/KGQueryDetails.tsx
+frontend/src/components/chat/MessageBubble.tsx
+frontend/src/components/chat/MessageList.tsx
+frontend/src/components/chat/kg-query.css
+frontend/src/components/voice/VoiceAssistant.tsx
+frontend/src/context/ChatContext.tsx
+frontend/src/types/index.ts
+frontend/tests/kg-query.test.tsx

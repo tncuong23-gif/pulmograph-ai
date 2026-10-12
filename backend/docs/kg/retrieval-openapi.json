@@ -1,0 +1,795 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "KG Retrieval API",
+    "version": "1.3.0"
+  },
+  "paths": {
+    "/api/v1/kg/import-json": {
+      "post": {
+        "tags": [
+          "kg-import"
+        ],
+        "summary": "Import Json",
+        "operationId": "import_json_api_v1_kg_import_json_post",
+        "parameters": [
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "upsert",
+              "title": "Mode"
+            }
+          },
+          {
+            "name": "dry_run",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Dry Run"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/imports/{import_id}/retry": {
+      "post": {
+        "tags": [
+          "kg-import"
+        ],
+        "summary": "Retry Import",
+        "operationId": "retry_import_api_v1_kg_imports__import_id__retry_post",
+        "parameters": [
+          {
+            "name": "import_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Import Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/imports/{import_id}": {
+      "get": {
+        "tags": [
+          "kg-import"
+        ],
+        "summary": "Import Status",
+        "operationId": "import_status_api_v1_kg_imports__import_id__get",
+        "parameters": [
+          {
+            "name": "import_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Import Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/health": {
+      "get": {
+        "tags": [
+          "kg-import"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_v1_kg_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/validate": {
+      "post": {
+        "summary": "Validate Payload",
+        "operationId": "validate_payload_api_v1_kg_validate_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/live": {
+      "get": {
+        "summary": "Live",
+        "operationId": "live_health_live_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "summary": "Ready",
+        "operationId": "ready_health_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/meta": {
+      "get": {
+        "summary": "Meta",
+        "operationId": "meta_api_v1_kg_meta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/query": {
+      "post": {
+        "summary": "Query",
+        "operationId": "query_api_v1_kg_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "503": {
+            "description": "Dependency unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/kg/assessment/coverage": {
+      "post": {
+        "summary": "Assessment Coverage",
+        "description": "Paginated structural coverage. Does not measure clinical completeness.",
+        "operationId": "assessment_coverage_api_v1_kg_assessment_coverage_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoverageRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/assessment/map": {
+      "post": {
+        "summary": "Assessment Map",
+        "description": "Resolve names to candidates; ambiguous/fuzzy matches require confirmation.",
+        "operationId": "assessment_map_api_v1_kg_assessment_map_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MapRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/kg/assessment/followups": {
+      "post": {
+        "summary": "Assessment Followups",
+        "description": "Read-only proposals using upstream-confirmed facts. Not diagnosis or automatic interview.",
+        "operationId": "assessment_followups_api_v1_kg_assessment_followups_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConfirmedFact": {
+        "properties": {
+          "fact_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Fact Id"
+          },
+          "kg_entity_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Kg Entity Id"
+          },
+          "presence": {
+            "type": "string",
+            "enum": [
+              "present",
+              "absent",
+              "unknown"
+            ],
+            "title": "Presence"
+          },
+          "confirmation_status": {
+            "type": "string",
+            "const": "user_confirmed",
+            "title": "Confirmation Status"
+          },
+          "confirmed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Confirmed At"
+          },
+          "source_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Source Id"
+          },
+          "timeframe": {
+            "type": "string",
+            "enum": [
+              "current",
+              "history"
+            ],
+            "title": "Timeframe"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fact_id",
+          "kg_entity_id",
+          "presence",
+          "confirmation_status",
+          "confirmed_at",
+          "source_id",
+          "timeframe"
+        ],
+        "title": "ConfirmedFact"
+      },
+      "CoverageRequest": {
+        "properties": {
+          "disease_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 200,
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Disease Ids"
+          },
+          "after_id": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "After Id",
+            "default": ""
+          },
+          "page_size": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Page Size",
+            "default": 30
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "CoverageRequest"
+      },
+      "FollowupRequest": {
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Patient Id"
+          },
+          "assessment_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Assessment Id"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/ConfirmedFact"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Facts"
+          },
+          "asked_entity_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Asked Entity Ids"
+          },
+          "max_questions": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Max Questions",
+            "default": 3
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "patient_id",
+          "assessment_id",
+          "facts"
+        ],
+        "title": "FollowupRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MapRequest": {
+        "properties": {
+          "mentions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Mentions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mentions"
+        ],
+        "title": "MapRequest"
+      },
+      "QueryRequest": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "mentions": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 2,
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mentions"
+          },
+          "intents": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 6,
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intents"
+          },
+          "context_mentions": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 2,
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Context Mentions"
+          },
+          "entity_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 2,
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Ids"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "one_hop",
+              "multi_hop",
+              "path",
+              "compare",
+              "common",
+              "difference"
+            ],
+            "title": "Mode",
+            "default": "auto"
+          },
+          "preset": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "drugs_for_disease",
+                  "drug_adverse_effects",
+                  "drug_contraindications"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preset"
+          },
+          "max_hops": {
+            "type": "integer",
+            "maximum": 4.0,
+            "minimum": 1.0,
+            "title": "Max Hops",
+            "default": 3
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 30
+          },
+          "include_evidence": {
+            "type": "boolean",
+            "title": "Include Evidence",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "QueryRequest"
+      },
+      "QueryResponse": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version",
+            "default": "1.2"
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_entity",
+              "no_facts",
+              "needs_clarification"
+            ],
+            "title": "Status"
+          },
+          "query": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Query"
+          },
+          "retrieval": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Retrieval"
+          },
+          "llm_context": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Llm Context"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "elapsed_ms": {
+            "type": "number",
+            "title": "Elapsed Ms"
+          },
+          "clarification": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clarification"
+          },
+          "timings_ms": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Timings Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request_id",
+          "question",
+          "status",
+          "query",
+          "retrieval",
+          "llm_context",
+          "warnings",
+          "elapsed_ms"
+        ],
+        "title": "QueryResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
